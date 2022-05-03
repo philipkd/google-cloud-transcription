@@ -36,9 +36,21 @@ from google.cloud import speech
 import pyaudio
 from six.moves import queue
 
+import os
+
+SAVE_PATH_KEY = 'GOOGLE_CLOUD_TRANSCRIPTION_SAVE_PATH'
+APP_CREDENTIALS_KEY = 'GOOGLE_APPLICATION_CREDENTIALS'
+
+if os.environ.get(APP_CREDENTIALS_KEY) is None:
+    exit(APP_CREDENTIALS_KEY + " required")
+
+if os.environ.get(SAVE_PATH_KEY) is None:
+    exit(SAVE_PATH_KEY + " required")
+
+SAVE_PATH = 
+
 p = pyaudio.PyAudio()
 
-print(p.get_device_info_by_index(0)['defaultSampleRate'])
 
 # exit()
 
@@ -46,7 +58,6 @@ print(p.get_device_info_by_index(0)['defaultSampleRate'])
 RATE = 48000
 # RATE = 16000
 CHUNK = int(RATE / 10)  # 100ms
-
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
