@@ -47,7 +47,7 @@ if os.environ.get(APP_CREDENTIALS_KEY) is None:
 if os.environ.get(SAVE_PATH_KEY) is None:
     exit(SAVE_PATH_KEY + " required")
 
-SAVE_PATH = 
+SAVE_PATH = os.environ.get(SAVE_PATH_KEY)
 
 p = pyaudio.PyAudio()
 
@@ -171,13 +171,18 @@ def listen_print_loop(responses):
             num_chars_printed = len(transcript)
 
         else:
-            print(transcript + overwrite_chars)
+            to_write = transcript + overwrite_chars
+            print(to_write)
+
+            file1 = open(SAVE_PATH, "a")  # append mode
+            file1.write(to_write)
+            file1.close()            
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
-            if re.search(r"\b(exit|quit)\b", transcript, re.I):
-                print("Exiting..")
-                break
+            # if re.search(r"\b(exit|quit)\b", transcript, re.I):
+            #     print("Exiting..")
+            #     break
 
             num_chars_printed = 0
 
