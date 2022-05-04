@@ -38,7 +38,9 @@ from six.moves import queue
 
 import os
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'google-cloud-key.json'
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SCRIPT_DIR + '/google-cloud-key.json'
 
 SAVE_PATH = sys.argv[1]
 
