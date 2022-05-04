@@ -126,6 +126,10 @@ class MicrophoneStream(object):
 
             yield b"".join(data)
 
+def append_to_save(content):
+    file1 = open(SAVE_PATH, "a")  # append mode
+    file1.write(content)
+    file1.close()
 
 def listen_print_loop(responses):
     """Iterates through server responses and prints them.
@@ -172,11 +176,14 @@ def listen_print_loop(responses):
 
         else:
             to_write = transcript + overwrite_chars
-            print(to_write)
+            
+            to_write = re.sub('new line[,.? ]+', "\n", to_write, flags=re.IGNORECASE)
 
-            file1 = open(SAVE_PATH, "a")  # append mode
-            file1.write(to_write)
-            file1.close()            
+            # to_write.replace("new line","\n",)
+
+            print(to_write)
+            
+            append_to_save(to_write)
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
