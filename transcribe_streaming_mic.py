@@ -38,17 +38,11 @@ from six.moves import queue
 
 import os
 
-SAVE_PATH_KEY = 'GOOGLE_CLOUD_TRANSCRIPTION_SAVE_PATH'
-
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'google-cloud-key.json'
 
-if os.environ.get(SAVE_PATH_KEY) is None:
-    exit(SAVE_PATH_KEY + " required")
-
-SAVE_PATH = os.environ.get(SAVE_PATH_KEY)
+SAVE_PATH = sys.argv[1]
 
 p = pyaudio.PyAudio()
-
 
 # exit()
 
