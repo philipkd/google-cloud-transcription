@@ -2,11 +2,11 @@
 
 This script is based on [Google's sample code](https://github.com/googleapis/python-speech/blob/HEAD/samples/microphone/transcribe_streaming_mic.py)
 
-# Running
+# Setup
 
-`export GOOGLE_APPLICATION_CREDENTIALS="YOUR_GOOGLE_CLOUD_KEY.json"`
+Place your Google Cloud Key as `google-cloud-key.json` in this folder.
 
-`python transcribe_streaming_mic.py`
+Run `python transcribe_streaming_mic.py /path/to/output/file`
 
 # Testing
 

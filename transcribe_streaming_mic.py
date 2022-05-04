@@ -39,10 +39,8 @@ from six.moves import queue
 import os
 
 SAVE_PATH_KEY = 'GOOGLE_CLOUD_TRANSCRIPTION_SAVE_PATH'
-APP_CREDENTIALS_KEY = 'GOOGLE_APPLICATION_CREDENTIALS'
 
-if os.environ.get(APP_CREDENTIALS_KEY) is None:
-    exit(APP_CREDENTIALS_KEY + " required")
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'google-cloud-key.json'
 
 if os.environ.get(SAVE_PATH_KEY) is None:
     exit(SAVE_PATH_KEY + " required")
