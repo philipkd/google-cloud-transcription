@@ -1,2 +1,4 @@
-*.json
+google-cloud-key.json
+
+# standard
 .DS_Store
