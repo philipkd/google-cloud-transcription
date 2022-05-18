@@ -142,6 +142,7 @@ def listen_print_loop(responses):
     final one, print a newline to preserve the finalized transcription.
     """
     num_temp_chars_printed = 0
+    had_newline = False
     for response in responses:
         if not response.results:
             continue
@@ -169,11 +170,12 @@ def listen_print_loop(responses):
             sys.stdout.write("\b" * num_temp_chars_printed)
             sys.stdout.flush()
 
+        # temporary result
         if not result.is_final:
         
-            # to_write = transcript + overwrite_chars + "\r"
-
-            # to_write = re.sub(r'^ ','', to_write)
+            # In English, thoughts are typically preceded by either a space or newline from the previous punctuation.
+            # Google Cloud Speech's API, after the first final result, typically delivers results with spaces in front of it.
+            transcript = re.sub(r'^ ','', transcript)
 
             sys.stdout.write(transcript)
             sys.stdout.flush()
@@ -181,13 +183,24 @@ def listen_print_loop(responses):
             num_temp_chars_printed = len(transcript)
 
         else:
-            to_write = re.sub('new line[,.? ]+', "\n", transcript, flags=re.IGNORECASE)
+
+            (to_write,num_newlines) = re.subn(' {0,1}new line[,.? ]+', "\n", transcript, flags=re.IGNORECASE)
+
+            # TODO: we should track if we printed a newline, and if so, when we print the next final result, it shouldn't have a leading space.
 
             # to_write = re.sub(r'^ ','', to_write)
 
-            print(to_write)
+            # See note above, this is for cosmetic reasons on stdout
+            chopped_to_write = re.sub(r'^ ','', to_write)
+            print(chopped_to_write)
             
+            if had_newline:
+                to_write = chopped_to_write
+
             append_to_save(to_write)
+
+            had_newline = num_newlines > 0
+
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
