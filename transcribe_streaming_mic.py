@@ -219,5 +219,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
+    except Exception as e:        
+        print(e)
+    print('\a')
 # [END speech_transcribe_streaming_mic]
