@@ -186,10 +186,6 @@ def listen_print_loop(responses):
 
             (to_write,num_newlines) = re.subn(' {0,1}new line[,.? ]+', "\n", transcript, flags=re.IGNORECASE)
 
-            # TODO: we should track if we printed a newline, and if so, when we print the next final result, it shouldn't have a leading space.
-
-            # to_write = re.sub(r'^ ','', to_write)
-
             # See note above, this is for cosmetic reasons on stdout
             chopped_to_write = re.sub(r'^ ','', to_write)
             print(chopped_to_write)
@@ -200,7 +196,6 @@ def listen_print_loop(responses):
             append_to_save(to_write)
 
             had_newline = num_newlines > 0
-
 
             # Exit recognition if any of the transcribed phrases could be
             # one of our keywords.
