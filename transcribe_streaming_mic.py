@@ -32,6 +32,7 @@ import re
 import sys
 
 from google.cloud import speech
+import google
 
 import pyaudio
 from six.moves import queue
@@ -162,8 +163,14 @@ def listen_print_loop(responses):
         # some extra spaces to overwrite the previous result
         overwrite_chars = " " * (num_chars_printed - len(transcript))
 
+        # print("(" + transcript + ")")
+
         if not result.is_final:
-            sys.stdout.write(transcript + overwrite_chars + "\r")
+            to_write = transcript + overwrite_chars + "\r"
+
+            # to_write = re.sub(r'^ ','', to_write)
+
+            sys.stdout.write(to_write)
             sys.stdout.flush()
 
             num_chars_printed = len(transcript)
@@ -173,7 +180,7 @@ def listen_print_loop(responses):
             
             to_write = re.sub('new line[,.? ]+', "\n", to_write, flags=re.IGNORECASE)
 
-            # to_write.replace("new line","\n",)
+            # to_write = re.sub(r'^ ','', to_write)
 
             print(to_write)
             
@@ -221,6 +228,8 @@ def main():
 if __name__ == "__main__":
     try:
         main()
+    except google.api_core.exceptions.OutOfRange:
+        print("\n\n> Exceeded maximum allowed stream duration.")
     except KeyboardInterrupt:
         pass
     except Exception as e:        
