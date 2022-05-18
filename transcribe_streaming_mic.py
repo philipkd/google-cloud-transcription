@@ -141,7 +141,7 @@ def listen_print_loop(responses):
     the next result to overwrite it, until the response is a final one. For the
     final one, print a newline to preserve the finalized transcription.
     """
-    num_chars_printed = 0
+    num_temp_chars_printed = 0
     for response in responses:
         if not response.results:
             continue
@@ -161,24 +161,27 @@ def listen_print_loop(responses):
         #
         # If the previous result was longer than this one, we need to print
         # some extra spaces to overwrite the previous result
-        overwrite_chars = " " * (num_chars_printed - len(transcript))
+        # overwrite_chars = " " * (num_chars_printed - len(transcript))
 
         # print("(" + transcript + ")")
 
+        if (num_temp_chars_printed):
+            sys.stdout.write("\b" * num_temp_chars_printed)
+            sys.stdout.flush()
+
         if not result.is_final:
-            to_write = transcript + overwrite_chars + "\r"
+        
+            # to_write = transcript + overwrite_chars + "\r"
 
             # to_write = re.sub(r'^ ','', to_write)
 
-            sys.stdout.write(to_write)
+            sys.stdout.write(transcript)
             sys.stdout.flush()
 
-            num_chars_printed = len(transcript)
+            num_temp_chars_printed = len(transcript)
 
         else:
-            to_write = transcript + overwrite_chars
-            
-            to_write = re.sub('new line[,.? ]+', "\n", to_write, flags=re.IGNORECASE)
+            to_write = re.sub('new line[,.? ]+', "\n", transcript, flags=re.IGNORECASE)
 
             # to_write = re.sub(r'^ ','', to_write)
 
@@ -192,7 +195,7 @@ def listen_print_loop(responses):
             #     print("Exiting..")
             #     break
 
-            num_chars_printed = 0
+            num_temp_chars_printed = 0
 
 
 def main():
