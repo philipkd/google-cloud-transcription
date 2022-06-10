@@ -65,7 +65,10 @@ class MicrophoneStream(object):
         self._buff = queue.Queue()
         self.closed = True
 
+
     def __enter__(self):
+
+
         self._audio_interface = pyaudio.PyAudio()
         self._audio_stream = self._audio_interface.open(
             format=pyaudio.paInt16,
@@ -100,6 +103,7 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
+
         while not self.closed:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
@@ -111,6 +115,7 @@ class MicrophoneStream(object):
 
             # Now consume whatever other data's still buffered.
             while True:
+
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
