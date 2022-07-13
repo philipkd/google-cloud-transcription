@@ -242,6 +242,7 @@ def main():
 
 
 if __name__ == "__main__":
+    print('\a')
     try:
         main()
     except google.api_core.exceptions.OutOfRange:
