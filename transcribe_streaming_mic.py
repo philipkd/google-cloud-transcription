@@ -242,14 +242,8 @@ def main():
 
 
 if __name__ == "__main__":
-    print('\a')
-    try:
-        main()
-    except google.api_core.exceptions.OutOfRange:
-        print("\n\n> Exceeded maximum allowed stream duration.")
-    except KeyboardInterrupt:
-        pass
-    except Exception as e:        
-        print(e)
-    print('\a')
+    main()
+    # except google.api_core.exceptions.OutOfRange:
+    #     print("\n\n> Exceeded maximum allowed stream duration.")
+
 # [END speech_transcribe_streaming_mic]
