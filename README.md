@@ -7,6 +7,7 @@ This script is based on [Google's sample code](https://github.com/googleapis/pyt
 1. `brew install portaudio`
 2. `pip install pyaudio`
 3. If that doesn't work, try `pip install --global-option='build_ext' --global-option="-I$(brew --prefix)/include" --global-option="-L$(brew --prefix)/lib" pyaudio` ([more info](https://stackoverflow.com/questions/33513522/when-installing-pyaudio-pip-cannot-find-portaudio-h-in-usr-local-include))
-4. `conda install google-cloud-speech`
-5. Place your Google Cloud Key as `google-cloud-key.json` in this folder.
-6. Run `python transcribe_streaming_mic.py /path/to/output/file`
+4. `pip install --upgrade google-api-python-client`
+5. `conda install google-cloud-speech`
+6. Place your Google Cloud Key as `google-cloud-key.json` in this folder.
+7. Run `python transcribe_streaming_mic.py /path/to/output/file`
